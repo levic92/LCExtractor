@@ -1,7 +1,7 @@
 #
 # core.py
 #
-# Copyright (C) 2009 Andrew Resch <andrewresch@gmail.com>
+# Copyright (C) 2017 levic92
 #
 # Basic plugin template created by:
 # Copyright (C) 2008 Martijn Voncken <mvoncken@gmail.com>
@@ -135,6 +135,8 @@ class Core(CorePluginBase):
         """
         tid = component.get("TorrentManager").torrents[torrent_id]
         tid_status = tid.get_status(["save_path", "name"])
+        # set is_finished to False so Sonarr and Radarr won't process download
+        tid.is_finished = False
 
         files = tid.get_files()
         for f in files:
@@ -175,6 +177,9 @@ class Core(CorePluginBase):
             log.debug("EXTRACTOR: Extracting %s from %s with %s %s to %s", fpath, torrent_id, cmd[0], cmd[1], dest)
             d = getProcessOutputAndValue(cmd[0], cmd[1].split() + [str(fpath)], os.environ, str(dest))
             d.addCallback(on_extract, torrent_id, fpath)
+        
+        # set back to True
+        tid.is_finished = True
 
     @export
     def set_config(self, config):
