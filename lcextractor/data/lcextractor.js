@@ -57,6 +57,14 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
             boxLabel: _('Create torrent name sub-folder')
         });
 
+        this.in_place_extraction = fieldset.add({
+            xtype: 'checkbox',
+            name: 'in_place_extraction',
+            height: 22,
+            hideLabel: true,
+            boxLabel: _('Extract torrent in-place')
+        });
+
         this.on('show', this.updateConfig, this);
     },
 
@@ -66,6 +74,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
 
         config['extract_path'] = this.extract_path.getValue();
         config['use_name_folder'] = this.use_name_folder.getValue();
+        config['in_place_extraction'] = this.in_place_extraction.getValue();
 
         deluge.client.lcextractor.set_config(config);
     },
@@ -79,6 +88,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
             success: function(config) {
                 this.extract_path.setValue(config['extract_path']);
                 this.use_name_folder.setValue(config['use_name_folder']);
+                this.in_place_extraction.setValue(config['in_place_extraction']);
             },
             scope: this
         });

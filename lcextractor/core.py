@@ -52,7 +52,8 @@ from extractor.which import which
 
 DEFAULT_PREFS = {
     "extract_path": "",
-    "use_name_folder": True
+    "use_name_folder": True,
+    "in_place_extraction": True
 }
 
 if windows_check():
@@ -155,9 +156,16 @@ class Core(CorePluginBase):
 
             cmd = EXTRACT_COMMANDS[file_ext]
             fpath = os.path.join(tid_status["save_path"], os.path.normpath(f["path"]))
+            
+            # Get the destination path
             dest = os.path.normpath(self.config["extract_path"])
+            
             if self.config["use_name_folder"]:
                 dest = os.path.join(dest, tid_status["name"])
+            
+            # Override destination if in_place_extraction is set
+            if self.config["in_place_extraction"]:
+                dest = os.path.join(tid_status["save_path"], tid_status["name"])
 
             try:
                 os.makedirs(dest)
