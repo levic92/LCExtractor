@@ -30,7 +30,7 @@ To build the python egg file:
 
 Download the [egg file](https://github.com/levic92/LCExtractor) of the plugin.
 
-#####Notes
+##### Notes
 * Plugin eggs have the Python version encoded in the filename and will only load in Deluge if the versions match. (e.g. Plugin-1.0-py2.7.egg is a Python 2.7 egg.)
 
 * On *nix systems, you can verify Python version with: ```python --version```
@@ -61,7 +61,7 @@ Windows:
 
 When running the Deluge daemon, ``` deluged ``` and the Deluge client on separate computers, the plugin must be installed on both of them. When installing the egg through the GTK client it will be placed in the plugins directory of your computer, as well as copied over to the computer running the daemon.
 
-#####Note: If the Python versions on the server and desktop computer do not match, you will have to copy the egg file to the server manually.
+##### Note: If the Python versions on the server and desktop computer do not match, you will have to copy the egg file to the server manually.
 
 For example in the setup below you will have to install the py2.6 egg on the desktop as you normal would do but then manually install the py2.7 egg onto the server.
 
