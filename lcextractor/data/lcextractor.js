@@ -65,6 +65,14 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
             boxLabel: _('Extract torrent in-place')
         });
 
+        this.sonarr_radarr_support = fieldset.add({
+            xtype: 'checkbox',
+            name: 'sonarr_radarr_support',
+            height: 22,
+            hideLabel: true,
+            boxLabel: _('Enable support for Sonarr/Radarr Completed Download Handling (toggle is_finished)')
+        });
+
         this.on('show', this.updateConfig, this);
     },
 
@@ -75,6 +83,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
         config['extract_path'] = this.extract_path.getValue();
         config['use_name_folder'] = this.use_name_folder.getValue();
         config['in_place_extraction'] = this.in_place_extraction.getValue();
+        config['sonarr_radarr_support'] = this.sonarr_radarr_support.getValue();
 
         deluge.client.lcextractor.set_config(config);
     },
@@ -89,6 +98,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
                 this.extract_path.setValue(config['extract_path']);
                 this.use_name_folder.setValue(config['use_name_folder']);
                 this.in_place_extraction.setValue(config['in_place_extraction']);
+                this.sonarr_radarr_support.setValue(config['sonarr_radarr_support']);
             },
             scope: this
         });
