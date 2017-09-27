@@ -166,18 +166,16 @@ class Core(CorePluginBase):
             
             # Get the destination path
             dest = os.path.normpath(self.config["extract_path"])
-            # need to make sure torrent has a parent directory that matches name.... occasionally name is actually just the file
             name_dest = os.path.join(dest, tid_status["name"])
-            if self.config["use_name_folder"] and os.path.isdir(name_dest):
-                dest = name_dest
-            
+
             # Override destination if in_place_extraction is set
             if self.config["in_place_extraction"]:
                 dest = tid_status["save_path"]
                 name_dest = os.path.join(dest, tid_status["name"])
-                # need to make sure torrent has a parent directory that matches name.... occasionally name is actually just the file
-                if self.config["use_name_folder"] and os.path.isdir(name_dest):
-                    dest = name_dest
+
+            # make sure path does not exist or torrent parent directory matches the torrent name.... occasionally name is actually just the file
+            if self.config["use_name_folder"] and ((not os.path.exists(name_dest)) or os.path.isdir(name_dest)):
+                dest = name_dest
 
             try:
                 os.makedirs(dest)
