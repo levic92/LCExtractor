@@ -28,7 +28,7 @@ To build the python egg file:
 
 # Installation Instructions
 
-Download the [egg file](https://github.com/levic92/LCExtractor) of the plugin.
+Download the [egg file](https://github.com/levic92/LCExtractor/releases/download/0.6/LCExtractor-0.6-py2.7.egg) of the plugin.
 
 ##### Notes
 * Plugin eggs have the Python version encoded in the filename and will only load in Deluge if the versions match. (e.g. Plugin-1.0-py2.7.egg is a Python 2.7 egg.)
