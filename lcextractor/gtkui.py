@@ -71,8 +71,8 @@ class GtkUI(GtkPluginBase):
 
         config = {
             "extract_path": path,
-            "use_name_folder": self.glade.get_widget("chk_use_name").get_active()
-            "in_place_extraction": self.glade.get_widget("chk_in_place_extraction").get_active()
+            "use_name_folder": self.glade.get_widget("chk_use_name").get_active(),
+            "in_place_extraction": self.glade.get_widget("chk_in_place_extraction").get_active(),
             "sonarr_radarr_support": self.glade.get_widget("chk_sonarr_radarr_support").get_active()
         }
 
