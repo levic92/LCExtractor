@@ -213,7 +213,7 @@ class Core(CorePluginBase):
             d = getProcessOutputAndValue(cmd[0], cmd[1].split() + [str(fpath)], os.environ, str(dest))
             d.addCallback(on_extract, torrent_id, fpath, self.config["sonarr_radarr_support"], extraction_count)
         
-        if extraction_count[0] == 0:
+        if self.config["sonarr_radarr_support"] and extraction_count[0] == 0:
             log.info("EXTRACTOR: Setting is_finished to true: %s", tid_status["name"])
             # set back to true since there are no files to extract
             tid.is_finished = True
