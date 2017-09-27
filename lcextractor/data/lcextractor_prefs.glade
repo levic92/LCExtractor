@@ -96,7 +96,7 @@
                 </child>
                 <child>
                   <widget class="GtkCheckButton" id="chk_sonarr_radarr_support">
-                    <property name="label" translatable="yes">Enable support for Sonarr/Radarr</property>
+                    <property name="label" translatable="yes">Enable support for Sonarr and Radarr</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>

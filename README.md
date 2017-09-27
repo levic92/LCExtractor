@@ -88,7 +88,7 @@ In place extraction code from: https://github.com/cvarta/deluge-extractor/
 ```
 #!/bin/bash
 curl -c cookies.txt --compressed -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"method": "auth.login", "params": [""], "id": 1}' http://127.0.0.1:8112/json
-json=$(curl -b cookies.txt --compressed -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"method": "web.update_ui", "params": [["name", "is_finished"], {"label": "test"}], "id": 1}' http://127.0.0.1:8112/json)
+json=$(curl -b cookies.txt --compressed -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"method": "web.update_ui", "params": [["name", "is_finished", "save_path"], {"label": "tv"}], "id": 1}' http://127.0.0.1:8112/json)
 rm cookies.txt
 echo $json
 ```

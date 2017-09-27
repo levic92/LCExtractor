@@ -139,10 +139,11 @@ class Core(CorePluginBase):
         tid_status = tid.get_status(["save_path", "name"])
 
         if self.config["sonarr_radarr_support"]:
+            log.info("EXTRACTOR: Setting is_finished to false: %s", tid_status["name"])
             # set is_finished to False so Sonarr and Radarr won't process download
             tid.is_finished = False
 
-        # keep track of total extraction jobs for torrent... store in list so it is mutable. index 0 = total, index 1 = complete
+        # keep track of total extraction jobs for torrent... store in list so it is mutable. index 0 = total, index 1 = complete count
         extraction_count = [0, 0]
 
         files = tid.get_files()
@@ -165,14 +166,18 @@ class Core(CorePluginBase):
             
             # Get the destination path
             dest = os.path.normpath(self.config["extract_path"])
-            if self.config["use_name_folder"]:
-                dest = os.path.join(dest, tid_status["name"])
+            # need to make sure torrent has a parent directory that matches name.... occasionally name is actually just the file
+            name_dest = os.path.join(dest, tid_status["name"])
+            if self.config["use_name_folder"] and os.path.isdir(name_dest):
+                dest = name_dest
             
             # Override destination if in_place_extraction is set
             if self.config["in_place_extraction"]:
                 dest = tid_status["save_path"]
-                if self.config["use_name_folder"]:
-                    dest = os.path.join(dest, tid_status["name"])
+                name_dest = os.path.join(dest, tid_status["name"])
+                # need to make sure torrent has a parent directory that matches name.... occasionally name is actually just the file
+                if self.config["use_name_folder"] and os.path.isdir(name_dest):
+                    dest = name_dest
 
             try:
                 os.makedirs(dest)
@@ -185,10 +190,11 @@ class Core(CorePluginBase):
                 # increment extraction_count complete
                 extraction_count[1] += 1
                 # tmp logging
-                log.info("EXTRACTOR: 1: extraction count total %d, complete %d", extraction_count[0], extraction_count[1])
+                log.debug("EXTRACTOR: 1: extraction count total %d, complete %d", extraction_count[0], extraction_count[1])
 
                 # if sonarr_radarr_support is enabled and we have extracted all files
                 if sonarr_radarr_support and extraction_count[0] == extraction_count[1]:
+                    log.info("EXTRACTOR: Setting is_finished to true: %s", tid_status["name"])
                     tid = component.get("TorrentManager").torrents[torrent_id]
                     # set is_finished back to True
                     tid.is_finished = True
@@ -202,16 +208,17 @@ class Core(CorePluginBase):
             # increment extraction_count
             extraction_count[0] += 1
             # tmp logging
-            log.info("EXTRACTOR: 0: extraction count total %d, complete %d", extraction_count[0], extraction_count[1])
+            log.debug("EXTRACTOR: 0: extraction count total %d, complete %d", extraction_count[0], extraction_count[1])
 
             # Run the command and add callback.
             log.debug("EXTRACTOR: Extracting %s from %s with %s %s to %s", fpath, torrent_id, cmd[0], cmd[1], dest)
             d = getProcessOutputAndValue(cmd[0], cmd[1].split() + [str(fpath)], os.environ, str(dest))
             d.addCallback(on_extract, torrent_id, fpath, self.config["sonarr_radarr_support"], extraction_count)
         
-        # can't do this here because extraction uses callbacks
-        # set back to True
-        # tid.is_finished = True
+        if extraction_count[0] == 0:
+            log.info("EXTRACTOR: Setting is_finished to true: %s", tid_status["name"])
+            # set back to true since there are no files to extract
+            tid.is_finished = True
 
     @export
     def set_config(self, config):

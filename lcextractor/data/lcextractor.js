@@ -70,7 +70,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
             name: 'sonarr_radarr_support',
             height: 22,
             hideLabel: true,
-            boxLabel: _('Enable support for Sonarr/Radarr Completed Download Handling (toggle is_finished)')
+            boxLabel: _('Enable support for Sonarr and Radarr')
         });
 
         this.on('show', this.updateConfig, this);
