@@ -20,6 +20,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
     title: _('LCExtractor'),
     layout: 'fit',
     border: false,
+    configLoaded: false,
 
     initComponent: function() {
         Deluge.ux.preferences.LCExtractorPage.superclass.initComponent.call(this);
@@ -77,15 +78,18 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
     },
 
     onApply: function() {
-        // build settings object
-        var config = { }
+        // Only apply the settings if we've previously loaded them (or else we end up resetting the config!).
+        if (this.configLoaded) {
+          // build settings object
+          var config = { }
 
-        config['extract_path'] = this.extract_path.getValue();
-        config['use_name_folder'] = this.use_name_folder.getValue();
-        config['in_place_extraction'] = this.in_place_extraction.getValue();
-        config['sonarr_radarr_support'] = this.sonarr_radarr_support.getValue();
+          config['extract_path'] = this.extract_path.getValue();
+          config['use_name_folder'] = this.use_name_folder.getValue();
+          config['in_place_extraction'] = this.in_place_extraction.getValue();
+          config['sonarr_radarr_support'] = this.sonarr_radarr_support.getValue();
 
-        deluge.client.lcextractor.set_config(config);
+          deluge.client.lcextractor.set_config(config);
+        }
     },
 
     onOk: function() {
@@ -99,6 +103,7 @@ Deluge.ux.preferences.LCExtractorPage = Ext.extend(Ext.Panel, {
                 this.use_name_folder.setValue(config['use_name_folder']);
                 this.in_place_extraction.setValue(config['in_place_extraction']);
                 this.sonarr_radarr_support.setValue(config['sonarr_radarr_support']);
+                this.configLoaded = true;
             },
             scope: this
         });
