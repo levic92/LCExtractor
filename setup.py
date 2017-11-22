@@ -42,7 +42,7 @@ from setuptools import setup
 __plugin_name__ = "LCExtractor"
 __author__ = "levic92"
 __author_email__ = ""
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 __url__ = "http://deluge-torrent.org"
 __license__ = "GPLv3"
 __description__ = "Extract files upon torrent completion"
