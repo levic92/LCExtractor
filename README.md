@@ -9,6 +9,15 @@ Changes have been made to integrate with the way "Completed Download Handling" w
 * A sub folder (name of torrent) can be created within the target folder
 * In-place extraction of the torrent in the torrent's download folder is possible as well
 
+## Config Options
+
+**sonarr_radarr_support**: toggles attributes so the torrent isn't imported until the extraction is done
+**extract_path**: is the default destination directory to extract files to
+**in_place_extraction**: overrides extract_path destination directory and instead uses the "save_path" of the torrent in deluge
+**use_name_folder**: extract to directory with the same name as torrent
+
+You will want use_name_folder set to true if using with Sonarr or Radarr
+
 ## Supported File formats:
 
 UniX-ish supports:
