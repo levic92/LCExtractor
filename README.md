@@ -18,6 +18,10 @@ Changes have been made to integrate with the way "Completed Download Handling" w
 
 You will want use_name_folder set to true if using with Sonarr or Radarr
 
+## Automated Cleanup
+
+[Script](https://github.com/levic92/LCExtractor/tree/master/extras)
+
 ## Supported File formats:
 
 UniX-ish supports:
