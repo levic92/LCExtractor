@@ -137,10 +137,10 @@ if deluge_url and sourcepath and destpath and (download_id or download_name):
                                     if move_extraced_to:
                                         new_path = os.path.join(move_extraced_to, filename)
                                         os.rename(sourcepath, new_path)
-                                        xprint("Move")
+                                        xprint("Moved: " + sourcepath)
                                     else:
                                         os.remove(sourcepath)
-                                        xprint("Delete")
+                                        xprint("Deleted: " + sourcepath)
                                 except Exception as e:
                                     xprintErr("Failed to delete or move file: " + sourcepath)
                                     xprintErr(e)
